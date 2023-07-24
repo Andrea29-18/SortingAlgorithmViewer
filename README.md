@@ -32,6 +32,7 @@ Este proyecto en Java implementa varios algoritmos de ordenamiento utilizando pr
 5. Finalmente, el programa mostrará paso a paso cómo se va ordenando la lista y, al finalizar, mostrará la lista ordenada.
 
 ![Ejemplo De Ejecucuión](Imagenes/EjemploDeEjecucion.png)
+![Ejemplo De Ejecucuión](Imagenes/EjemploDeEjecionLetra.png)
 
 **Nota:** Si el usuario no selecciona un algoritmo válido, el programa utilizará el Bubble Sort por defecto.
 

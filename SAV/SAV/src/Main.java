@@ -10,10 +10,10 @@ class OrdenamientoMain {
         int cantidadValores = scanner.nextInt();
 
         // Obtener los valores
-        int[] valores = new int[cantidadValores];
+        String[] valores = new String[cantidadValores];
         System.out.println("Ingrese los valores, uno por línea:");
         for (int i = 0; i < cantidadValores; i++) {
-            valores[i] = scanner.nextInt();
+            valores[i] = scanner.next();
         }
 
         // Obtener el tipo de ordenamiento
@@ -80,30 +80,30 @@ class OrdenamientoMain {
 
 // Clase abstracta para los algoritmos de ordenamiento
 abstract class Ordenamiento {
-    public abstract void ordenarAscendente(int[] valores);
+    public abstract void ordenarAscendente(String[] valores);
 
-    public abstract void ordenarDescendente(int[] valores);
+    public abstract void ordenarDescendente(String[] valores);
 
-    protected void intercambiar(int[] arreglo, int i, int j) {
-        int temp = arreglo[i];
+    protected void intercambiar(String[] arreglo, int i, int j) {
+        String temp = arreglo[i];
         arreglo[i] = arreglo[j];
         arreglo[j] = temp;
     }
 
-    protected void imprimirPaso(int[] arreglo) {
+    protected void imprimirPaso(String[] arreglo) {
         System.out.println(Arrays.toString(arreglo));
     }
 }
 
 // Implementación del algoritmo Selection sort
 class SelectionSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         int n = valores.length;
 
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
-                if (valores[j] < valores[minIndex]) {
+                if (valores[j].compareToIgnoreCase(valores[minIndex]) < 0) {
                     minIndex = j;
                 }
             }
@@ -112,13 +112,13 @@ class SelectionSort extends Ordenamiento {
         }
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         int n = valores.length;
 
         for (int i = 0; i < n - 1; i++) {
             int maxIndex = i;
             for (int j = i + 1; j < n; j++) {
-                if (valores[j] > valores[maxIndex]) {
+                if (valores[j].compareToIgnoreCase(valores[maxIndex]) > 0) {
                     maxIndex = j;
                 }
             }
@@ -130,12 +130,12 @@ class SelectionSort extends Ordenamiento {
 
 // Implementación del algoritmo Bubble sort
 class BubbleSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         int n = valores.length;
 
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (valores[j] > valores[j + 1]) {
+                if (valores[j].compareToIgnoreCase(valores[j + 1]) > 0) {
                     intercambiar(valores, j, j + 1);
                     imprimirPaso(valores);
                 }
@@ -143,12 +143,12 @@ class BubbleSort extends Ordenamiento {
         }
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         int n = valores.length;
 
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (valores[j] < valores[j + 1]) {
+                if (valores[j].compareToIgnoreCase(valores[j + 1]) < 0) {
                     intercambiar(valores, j, j + 1);
                     imprimirPaso(valores);
                 }
@@ -159,13 +159,13 @@ class BubbleSort extends Ordenamiento {
 
 // Implementación del algoritmo Insertion sort
 class InsertionSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         int n = valores.length;
 
         for (int i = 1; i < n; i++) {
-            int key = valores[i];
+            String key = valores[i];
             int j = i - 1;
-            while (j >= 0 && valores[j] > key) {
+            while (j >= 0 && valores[j].compareToIgnoreCase(key) > 0) {
                 valores[j + 1] = valores[j];
                 j--;
             }
@@ -174,13 +174,13 @@ class InsertionSort extends Ordenamiento {
         }
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         int n = valores.length;
 
         for (int i = 1; i < n; i++) {
-            int key = valores[i];
+            String key = valores[i];
             int j = i - 1;
-            while (j >= 0 && valores[j] < key) {
+            while (j >= 0 && valores[j].compareToIgnoreCase(key) < 0) {
                 valores[j + 1] = valores[j];
                 j--;
             }
@@ -192,11 +192,11 @@ class InsertionSort extends Ordenamiento {
 
 // Implementación del algoritmo Merge sort
 class MergeSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         mergeSort(valores, 0, valores.length - 1);
     }
 
-    private void mergeSort(int[] valores, int l, int r) {
+    private void mergeSort(String[] valores, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
 
@@ -207,12 +207,12 @@ class MergeSort extends Ordenamiento {
         }
     }
 
-    private void merge(int[] valores, int l, int m, int r) {
+    private void merge(String[] valores, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
 
-        int[] L = new int[n1];
-        int[] R = new int[n2];
+        String[] L = new String[n1];
+        String[] R = new String[n2];
 
         for (int i = 0; i < n1; ++i) {
             L[i] = valores[l + i];
@@ -224,7 +224,7 @@ class MergeSort extends Ordenamiento {
         int i = 0, j = 0;
         int k = l;
         while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
+            if (L[i].compareToIgnoreCase(R[j]) <= 0) {
                 valores[k] = L[i];
                 i++;
             } else {
@@ -249,11 +249,11 @@ class MergeSort extends Ordenamiento {
         imprimirPaso(valores);
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         mergeSortDescendente(valores, 0, valores.length - 1);
     }
 
-    private void mergeSortDescendente(int[] valores, int l, int r) {
+    private void mergeSortDescendente(String[] valores, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
 
@@ -264,12 +264,12 @@ class MergeSort extends Ordenamiento {
         }
     }
 
-    private void mergeDescendente(int[] valores, int l, int m, int r) {
+    private void mergeDescendente(String[] valores, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
 
-        int[] L = new int[n1];
-        int[] R = new int[n2];
+        String[] L = new String[n1];
+        String[] R = new String[n2];
 
         for (int i = 0; i < n1; ++i) {
             L[i] = valores[l + i];
@@ -281,7 +281,7 @@ class MergeSort extends Ordenamiento {
         int i = 0, j = 0;
         int k = l;
         while (i < n1 && j < n2) {
-            if (L[i] >= R[j]) {
+            if (L[i].compareToIgnoreCase(R[j]) >= 0) {
                 valores[k] = L[i];
                 i++;
             } else {
@@ -309,11 +309,11 @@ class MergeSort extends Ordenamiento {
 
 // Implementación del algoritmo Quick sort
 class QuickSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         quickSort(valores, 0, valores.length - 1);
     }
 
-    private void quickSort(int[] valores, int low, int high) {
+    private void quickSort(String[] valores, int low, int high) {
         if (low < high) {
             int pi = partition(valores, low, high);
 
@@ -322,12 +322,12 @@ class QuickSort extends Ordenamiento {
         }
     }
 
-    private int partition(int[] valores, int low, int high) {
-        int pivot = valores[high];
+    private int partition(String[] valores, int low, int high) {
+        String pivot = valores[high];
         int i = (low - 1);
 
         for (int j = low; j < high; j++) {
-            if (valores[j] < pivot) {
+            if (valores[j].compareToIgnoreCase(pivot) < 0) {
                 i++;
                 intercambiar(valores, i, j);
             }
@@ -339,11 +339,11 @@ class QuickSort extends Ordenamiento {
         return i + 1;
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         quickSortDescendente(valores, 0, valores.length - 1);
     }
 
-    private void quickSortDescendente(int[] valores, int low, int high) {
+    private void quickSortDescendente(String[] valores, int low, int high) {
         if (low < high) {
             int pi = partitionDescendente(valores, low, high);
 
@@ -352,12 +352,12 @@ class QuickSort extends Ordenamiento {
         }
     }
 
-    private int partitionDescendente(int[] valores, int low, int high) {
-        int pivot = valores[high];
+    private int partitionDescendente(String[] valores, int low, int high) {
+        String pivot = valores[high];
         int i = (low - 1);
 
         for (int j = low; j < high; j++) {
-            if (valores[j] > pivot) {
+            if (valores[j].compareToIgnoreCase(pivot) > 0) {
                 i++;
                 intercambiar(valores, i, j);
             }
@@ -372,7 +372,7 @@ class QuickSort extends Ordenamiento {
 
 // Implementación del algoritmo Heap sort
 class HeapSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         int n = valores.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -386,16 +386,16 @@ class HeapSort extends Ordenamiento {
         }
     }
 
-    private void heapify(int[] valores, int n, int i) {
+    private void heapify(String[] valores, int n, int i) {
         int largest = i;
         int left = 2 * i + 1;
         int right = 2 * i + 2;
 
-        if (left < n && valores[left] > valores[largest]) {
+        if (left < n && valores[left].compareToIgnoreCase(valores[largest]) > 0) {
             largest = left;
         }
 
-        if (right < n && valores[right] > valores[largest]) {
+        if (right < n && valores[right].compareToIgnoreCase(valores[largest]) > 0) {
             largest = right;
         }
 
@@ -405,7 +405,7 @@ class HeapSort extends Ordenamiento {
         }
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         int n = valores.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -419,16 +419,16 @@ class HeapSort extends Ordenamiento {
         }
     }
 
-    private void heapifyDescendente(int[] valores, int n, int i) {
+    private void heapifyDescendente(String[] valores, int n, int i) {
         int largest = i;
         int left = 2 * i + 1;
         int right = 2 * i + 2;
 
-        if (left < n && valores[left] < valores[largest]) {
+        if (left < n && valores[left].compareToIgnoreCase(valores[largest]) < 0) {
             largest = left;
         }
 
-        if (right < n && valores[right] < valores[largest]) {
+        if (right < n && valores[right].compareToIgnoreCase(valores[largest]) < 0) {
             largest = right;
         }
 
@@ -441,147 +441,166 @@ class HeapSort extends Ordenamiento {
 
 // Implementación del algoritmo Counting sort
 class CountingSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
+    public void ordenarAscendente(String[] valores) {
         int n = valores.length;
 
-        int max = valores[0];
-        for (int i = 1; i < n; i++) {
-            if (valores[i] > max) {
-                max = valores[i];
-            }
-        }
+        int max = getMax(valores);
 
+        String[] output = new String[n];
         int[] count = new int[max + 1];
-        int[] output = new int[n];
 
         for (int i = 0; i < n; ++i) {
-            count[valores[i]]++;
+            count[getIndex(valores[i])]++; // Count the occurrences of each letter
         }
 
         for (int i = 1; i <= max; ++i) {
-            count[i] += count[i - 1];
+            count[i] += count[i - 1]; // Update count[i] to contain the actual position of this character in the output array
         }
 
+        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            output[count[valores[i]] - 1] = valores[i];
-            count[valores[i]]--;
+            int index = getIndex(valores[i]);
+            output[count[index] - 1] = valores[i];
+            count[index]--;
         }
 
-        for (int i = 0; i < n; i++) {
-            valores[i] = output[i];
-            imprimirPaso(valores);
-        }
+        // Copy the output array to the original array
+        System.arraycopy(output, 0, valores, 0, n);
     }
 
-    public void ordenarDescendente(int[] valores) {
+    public void ordenarDescendente(String[] valores) {
         int n = valores.length;
 
-        int max = valores[0];
-        for (int i = 1; i < n; i++) {
-            if (valores[i] > max) {
-                max = valores[i];
-            }
-        }
+        int max = getMax(valores);
 
+        String[] output = new String[n];
         int[] count = new int[max + 1];
-        int[] output = new int[n];
 
         for (int i = 0; i < n; ++i) {
-            count[valores[i]]++;
+            count[getIndex(valores[i])]++; // Count the occurrences of each letter
         }
 
         for (int i = max - 1; i >= 0; --i) {
-            count[i] += count[i + 1];
+            count[i] += count[i + 1]; // Update count[i] to contain the actual position of this character in the output array
         }
 
+        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            output[count[valores[i]] - 1] = valores[i];
-            count[valores[i]]--;
+            int index = getIndex(valores[i]);
+            output[count[index] - 1] = valores[i];
+            count[index]--;
         }
 
-        for (int i = 0; i < n; i++) {
-            valores[i] = output[i];
-            imprimirPaso(valores);
-        }
-    }
-}
-
-// Implementación del algoritmo Radix sort
-class RadixSort extends Ordenamiento {
-    public void ordenarAscendente(int[] valores) {
-        int max = getMax(valores);
-
-        for (int exp = 1; max / exp > 0; exp *= 10) {
-            countingSort(valores, exp);
-            imprimirPaso(valores);
-        }
+        // Copy the output array to the original array
+        System.arraycopy(output, 0, valores, 0, n);
     }
 
-    private int getMax(int[] valores) {
-        int max = valores[0];
-        int n = valores.length;
-        for (int i = 1; i < n; i++) {
-            if (valores[i] > max) {
-                max = valores[i];
+    private int getMax(String[] valores) {
+        int max = 0;
+        for (String value : valores) {
+            int index = getIndex(value);
+            if (index > max) {
+                max = index;
             }
         }
         return max;
     }
 
-    private void countingSort(int[] valores, int exp) {
-        int n = valores.length;
-        int[] output = new int[n];
-        int[] count = new int[10];
-        Arrays.fill(count, 0);
-
-        for (int i = 0; i < n; i++) {
-            count[(valores[i] / exp) % 10]++;
+    private int getIndex(String value) {
+        if (value == null || value.isEmpty()) {
+            return 0;
         }
 
-        for (int i = 1; i < 10; i++) {
-            count[i] += count[i - 1];
-        }
-
-        for (int i = n - 1; i >= 0; i--) {
-            output[count[(valores[i] / exp) % 10] - 1] = valores[i];
-            count[(valores[i] / exp) % 10]--;
-        }
-
-        for (int i = 0; i < n; i++) {
-            valores[i] = output[i];
-        }
+        char firstChar = Character.toLowerCase(value.charAt(0));
+        return firstChar - 'a' + 1;
     }
+}
 
-    public void ordenarDescendente(int[] valores) {
-        int max = getMax(valores);
+// Implementación del algoritmo Radix sort
+class RadixSort extends Ordenamiento {
+    public void ordenarAscendente(String[] valores) {
+        int maxLen = getMaxLen(valores);
 
-        for (int exp = 1; max / exp > 0; exp *= 10) {
-            countingSortDescendente(valores, exp);
+        for (int i = maxLen - 1; i >= 0; i--) {
+            countingSort(valores, i);
             imprimirPaso(valores);
         }
     }
 
-    private void countingSortDescendente(int[] valores, int exp) {
-        int n = valores.length;
-        int[] output = new int[n];
-        int[] count = new int[10];
-        Arrays.fill(count, 0);
+    private int getMaxLen(String[] valores) {
+        int maxLen = 0;
+        for (String value : valores) {
+            if (value.length() > maxLen) {
+                maxLen = value.length();
+            }
+        }
+        return maxLen;
+    }
 
-        for (int i = 0; i < n; i++) {
-            count[(valores[i] / exp) % 10]++;
+    private void countingSort(String[] valores, int pos) {
+        int n = valores.length;
+        String[] output = new String[n];
+
+        // Since we are dealing with characters (letters), we use 256 as the range of possible values
+        int[] count = new int[256];
+
+        // Count the occurrences of each character at the specified position
+        for (String value : valores) {
+            int index = pos < value.length() ? value.charAt(value.length() - 1 - pos) : 0;
+            count[index]++;
         }
 
-        for (int i = 8; i >= 0; i--) {
+        // Update count[i] to contain the actual position of the character in the output array
+        for (int i = 1; i < 256; i++) {
+            count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        for (int i = n - 1; i >= 0; i--) {
+            int index = pos < valores[i].length() ? valores[i].charAt(valores[i].length() - 1 - pos) : 0;
+            output[count[index] - 1] = valores[i];
+            count[index]--;
+        }
+
+        // Copy the output array to the original array
+        System.arraycopy(output, 0, valores, 0, n);
+    }
+
+    public void ordenarDescendente(String[] valores) {
+        int maxLen = getMaxLen(valores);
+
+        for (int i = maxLen - 1; i >= 0; i--) {
+            countingSortDescendente(valores, i);
+            imprimirPaso(valores);
+        }
+    }
+
+    private void countingSortDescendente(String[] valores, int pos) {
+        int n = valores.length;
+        String[] output = new String[n];
+
+        // Since we are dealing with characters (letters), we use 256 as the range of possible values
+        int[] count = new int[256];
+
+        // Count the occurrences of each character at the specified position
+        for (String value : valores) {
+            int index = pos < value.length() ? value.charAt(value.length() - 1 - pos) : 0;
+            count[index]++;
+        }
+
+        // Update count[i] to contain the actual position of the character in the output array
+        for (int i = 254; i >= 0; i--) {
             count[i] += count[i + 1];
         }
 
+        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            output[count[(valores[i] / exp) % 10] - 1] = valores[i];
-            count[(valores[i] / exp) % 10]--;
+            int index = pos < valores[i].length() ? valores[i].charAt(valores[i].length() - 1 - pos) : 0;
+            output[count[index] - 1] = valores[i];
+            count[index]--;
         }
 
-        for (int i = 0; i < n; i++) {
-            valores[i] = output[i];
-        }
+        // Copy the output array to the original array
+        System.arraycopy(output, 0, valores, 0, n);
     }
 }

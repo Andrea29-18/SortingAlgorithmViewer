@@ -1,10 +1,12 @@
+import java.util.List;
+
 // Implementación del algoritmo Quick sort
 class QuickSort extends Ordenamiento {
-    public void ordenarAscendente(String[] valores) {
-        quickSort(valores, 0, valores.length - 1);
+    public void ordenarAscendente(List<String> valores) {
+        quickSort(valores, 0, valores.size() - 1);
     }
 
-    private void quickSort(String[] valores, int low, int high) {
+    private void quickSort(List<String> valores, int low, int high) {
         if (low < high) {
             int pi = partition(valores, low, high);
 
@@ -13,12 +15,12 @@ class QuickSort extends Ordenamiento {
         }
     }
 
-    private int partition(String[] valores, int low, int high) {
-        String pivot = valores[high];
+    private int partition(List<String> valores, int low, int high) {
+        String pivot = valores.get(high);
         int i = (low - 1);
 
         for (int j = low; j < high; j++) {
-            if (valores[j].compareToIgnoreCase(pivot) < 0) {
+            if (valores.get(j).compareToIgnoreCase(pivot) < 0) {
                 i++;
                 intercambiar(valores, i, j);
             }
@@ -30,11 +32,11 @@ class QuickSort extends Ordenamiento {
         return i + 1;
     }
 
-    public void ordenarDescendente(String[] valores) {
-        quickSortDescendente(valores, 0, valores.length - 1);
+    public void ordenarDescendente(List<String> valores) {
+        quickSortDescendente(valores, 0, valores.size() - 1);
     }
 
-    private void quickSortDescendente(String[] valores, int low, int high) {
+    private void quickSortDescendente(List<String> valores, int low, int high) {
         if (low < high) {
             int pi = partitionDescendente(valores, low, high);
 
@@ -43,12 +45,12 @@ class QuickSort extends Ordenamiento {
         }
     }
 
-    private int partitionDescendente(String[] valores, int low, int high) {
-        String pivot = valores[high];
+    private int partitionDescendente(List<String> valores, int low, int high) {
+        String pivot = valores.get(high);
         int i = (low - 1);
 
         for (int j = low; j < high; j++) {
-            if (valores[j].compareToIgnoreCase(pivot) > 0) {
+            if (valores.get(j).compareToIgnoreCase(pivot) > 0) {
                 i++;
                 intercambiar(valores, i, j);
             }

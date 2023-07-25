@@ -1,12 +1,14 @@
+import java.util.List;
+
 // Implementación del algoritmo Selection sort
 class SelectionSort extends Ordenamiento {
-    public void ordenarAscendente(String[] valores) {
-        int n = valores.length;
+    public void ordenarAscendente(List<String> valores) {
+        int n = valores.size();
 
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
-                if (valores[j].compareToIgnoreCase(valores[minIndex]) < 0) {
+                if (valores.get(j).compareToIgnoreCase(valores.get(minIndex)) < 0) {
                     minIndex = j;
                 }
             }
@@ -15,13 +17,13 @@ class SelectionSort extends Ordenamiento {
         }
     }
 
-    public void ordenarDescendente(String[] valores) {
-        int n = valores.length;
+    public void ordenarDescendente(List<String> valores) {
+        int n = valores.size();
 
         for (int i = 0; i < n - 1; i++) {
             int maxIndex = i;
             for (int j = i + 1; j < n; j++) {
-                if (valores[j].compareToIgnoreCase(valores[maxIndex]) > 0) {
+                if (valores.get(j).compareToIgnoreCase(valores.get(maxIndex)) > 0) {
                     maxIndex = j;
                 }
             }

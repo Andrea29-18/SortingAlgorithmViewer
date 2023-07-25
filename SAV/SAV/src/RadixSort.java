@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+import java.util.List;
+
 // Implementación del algoritmo Radix sort
 class RadixSort extends Ordenamiento {
-    public void ordenarAscendente(String[] valores) {
+    public void ordenarAscendente(List<String> valores) {
         int maxLen = getMaxLen(valores);
 
         for (int i = maxLen - 1; i >= 0; i--) {
@@ -9,7 +12,7 @@ class RadixSort extends Ordenamiento {
         }
     }
 
-    private int getMaxLen(String[] valores) {
+    private int getMaxLen(List<String> valores) {
         int maxLen = 0;
         for (String value : valores) {
             if (value.length() > maxLen) {
@@ -19,36 +22,36 @@ class RadixSort extends Ordenamiento {
         return maxLen;
     }
 
-    private void countingSort(String[] valores, int pos) {
-        int n = valores.length;
-        String[] output = new String[n];
+    private void countingSort(List<String> valores, int pos) {
+        int n = valores.size();
+        List<String> output = new ArrayList<>(n);
+        for (int i = 0; i < n; ++i) {
+            output.add("");
+        }
 
-        // Since we are dealing with characters (letters), we use 256 as the range of possible values
         int[] count = new int[256];
 
-        // Count the occurrences of each character at the specified position
         for (String value : valores) {
             int index = pos < value.length() ? value.charAt(value.length() - 1 - pos) : 0;
             count[index]++;
         }
 
-        // Update count[i] to contain the actual position of the character in the output array
         for (int i = 1; i < 256; i++) {
             count[i] += count[i - 1];
         }
 
-        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            int index = pos < valores[i].length() ? valores[i].charAt(valores[i].length() - 1 - pos) : 0;
-            output[count[index] - 1] = valores[i];
+            int index = pos < valores.get(i).length() ? valores.get(i).charAt(valores.get(i).length() - 1 - pos) : 0;
+            output.set(count[index] - 1, valores.get(i));
             count[index]--;
         }
 
-        // Copy the output array to the original array
-        System.arraycopy(output, 0, valores, 0, n);
+        for (int i = 0; i < n; ++i) {
+            valores.set(i, output.get(i));
+        }
     }
 
-    public void ordenarDescendente(String[] valores) {
+    public void ordenarDescendente(List<String> valores) {
         int maxLen = getMaxLen(valores);
 
         for (int i = maxLen - 1; i >= 0; i--) {
@@ -57,32 +60,32 @@ class RadixSort extends Ordenamiento {
         }
     }
 
-    private void countingSortDescendente(String[] valores, int pos) {
-        int n = valores.length;
-        String[] output = new String[n];
+    private void countingSortDescendente(List<String> valores, int pos) {
+        int n = valores.size();
+        List<String> output = new ArrayList<>(n);
+        for (int i = 0; i < n; ++i) {
+            output.add("");
+        }
 
-        // Since we are dealing with characters (letters), we use 256 as the range of possible values
         int[] count = new int[256];
 
-        // Count the occurrences of each character at the specified position
         for (String value : valores) {
             int index = pos < value.length() ? value.charAt(value.length() - 1 - pos) : 0;
             count[index]++;
         }
 
-        // Update count[i] to contain the actual position of the character in the output array
         for (int i = 254; i >= 0; i--) {
             count[i] += count[i + 1];
         }
 
-        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            int index = pos < valores[i].length() ? valores[i].charAt(valores[i].length() - 1 - pos) : 0;
-            output[count[index] - 1] = valores[i];
+            int index = pos < valores.get(i).length() ? valores.get(i).charAt(valores.get(i).length() - 1 - pos) : 0;
+            output.set(count[index] - 1, valores.get(i));
             count[index]--;
         }
 
-        // Copy the output array to the original array
-        System.arraycopy(output, 0, valores, 0, n);
+        for (int i = 0; i < n; ++i) {
+            valores.set(i, output.get(i));
+        }
     }
 }

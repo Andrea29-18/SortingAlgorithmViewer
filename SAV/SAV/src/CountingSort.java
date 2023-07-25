@@ -1,60 +1,71 @@
+import java.util.ArrayList;
+import java.util.List;
+
 // Implementación del algoritmo Counting sort
 class CountingSort extends Ordenamiento {
-    public void ordenarAscendente(String[] valores) {
-        int n = valores.length;
+    public void ordenarAscendente(List<String> valores) {
+        int n = valores.size();
 
         int max = getMax(valores);
 
-        String[] output = new String[n];
+        List<String> output = new ArrayList<>(n);
+        for (int i = 0; i < n; ++i) {
+            output.add("");
+        }
+
         int[] count = new int[max + 1];
 
-        for (int i = 0; i < n; ++i) {
-            count[getIndex(valores[i])]++; // Count the occurrences of each letter
+        for (String value : valores) {
+            count[getIndex(value)]++;
         }
 
         for (int i = 1; i <= max; ++i) {
-            count[i] += count[i - 1]; // Update count[i] to contain the actual position of this character in the output array
+            count[i] += count[i - 1];
         }
 
-        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            int index = getIndex(valores[i]);
-            output[count[index] - 1] = valores[i];
+            int index = getIndex(valores.get(i));
+            output.set(count[index] - 1, valores.get(i));
             count[index]--;
         }
 
-        // Copy the output array to the original array
-        System.arraycopy(output, 0, valores, 0, n);
+        for (int i = 0; i < n; ++i) {
+            valores.set(i, output.get(i));
+        }
     }
 
-    public void ordenarDescendente(String[] valores) {
-        int n = valores.length;
+    public void ordenarDescendente(List<String> valores) {
+        int n = valores.size();
 
         int max = getMax(valores);
 
-        String[] output = new String[n];
+        List<String> output = new ArrayList<>(n);
+        for (int i = 0; i < n; ++i) {
+            output.add("");
+        }
+
         int[] count = new int[max + 1];
 
-        for (int i = 0; i < n; ++i) {
-            count[getIndex(valores[i])]++; // Count the occurrences of each letter
+        for (String value : valores) {
+            count[getIndex(value)]++;
         }
 
         for (int i = max - 1; i >= 0; --i) {
-            count[i] += count[i + 1]; // Update count[i] to contain the actual position of this character in the output array
+            count[i] += count[i + 1];
         }
 
-        // Build the output array
         for (int i = n - 1; i >= 0; i--) {
-            int index = getIndex(valores[i]);
-            output[count[index] - 1] = valores[i];
+            int index = getIndex(valores.get(i));
+            output.set(count[index] - 1, valores.get(i));
             count[index]--;
         }
 
-        // Copy the output array to the original array
-        System.arraycopy(output, 0, valores, 0, n);
+        for (int i = 0; i < n; ++i) {
+            valores.set(i, output.get(i));
+        }
     }
 
-    private int getMax(String[] valores) {
+    private int getMax(List<String> valores) {
         int max = 0;
         for (String value : valores) {
             int index = getIndex(value);

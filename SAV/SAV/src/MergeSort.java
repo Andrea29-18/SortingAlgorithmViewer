@@ -1,10 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 // Implementación del algoritmo Merge sort
 class MergeSort extends Ordenamiento {
-    public void ordenarAscendente(String[] valores) {
-        mergeSort(valores, 0, valores.length - 1);
+    public void ordenarAscendente(List<String> valores) {
+        mergeSort(valores, 0, valores.size() - 1);
     }
 
-    private void mergeSort(String[] valores, int l, int r) {
+    private void mergeSort(List<String> valores, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
 
@@ -15,41 +18,34 @@ class MergeSort extends Ordenamiento {
         }
     }
 
-    private void merge(String[] valores, int l, int m, int r) {
+    private void merge(List<String> valores, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
 
-        String[] L = new String[n1];
-        String[] R = new String[n2];
-
-        for (int i = 0; i < n1; ++i) {
-            L[i] = valores[l + i];
-        }
-        for (int j = 0; j < n2; ++j) {
-            R[j] = valores[m + 1 + j];
-        }
+        List<String> L = new ArrayList<>(valores.subList(l, l + n1));
+        List<String> R = new ArrayList<>(valores.subList(m + 1, m + 1 + n2));
 
         int i = 0, j = 0;
         int k = l;
         while (i < n1 && j < n2) {
-            if (L[i].compareToIgnoreCase(R[j]) <= 0) {
-                valores[k] = L[i];
+            if (L.get(i).compareToIgnoreCase(R.get(j)) <= 0) {
+                valores.set(k, L.get(i));
                 i++;
             } else {
-                valores[k] = R[j];
+                valores.set(k, R.get(j));
                 j++;
             }
             k++;
         }
 
         while (i < n1) {
-            valores[k] = L[i];
+            valores.set(k, L.get(i));
             i++;
             k++;
         }
 
         while (j < n2) {
-            valores[k] = R[j];
+            valores.set(k, R.get(j));
             j++;
             k++;
         }
@@ -57,11 +53,11 @@ class MergeSort extends Ordenamiento {
         imprimirPaso(valores);
     }
 
-    public void ordenarDescendente(String[] valores) {
-        mergeSortDescendente(valores, 0, valores.length - 1);
+    public void ordenarDescendente(List<String> valores) {
+        mergeSortDescendente(valores, 0, valores.size() - 1);
     }
 
-    private void mergeSortDescendente(String[] valores, int l, int r) {
+    private void mergeSortDescendente(List<String> valores, int l, int r) {
         if (l < r) {
             int m = (l + r) / 2;
 
@@ -72,41 +68,34 @@ class MergeSort extends Ordenamiento {
         }
     }
 
-    private void mergeDescendente(String[] valores, int l, int m, int r) {
+    private void mergeDescendente(List<String> valores, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
 
-        String[] L = new String[n1];
-        String[] R = new String[n2];
-
-        for (int i = 0; i < n1; ++i) {
-            L[i] = valores[l + i];
-        }
-        for (int j = 0; j < n2; ++j) {
-            R[j] = valores[m + 1 + j];
-        }
+        List<String> L = new ArrayList<>(valores.subList(l, l + n1));
+        List<String> R = new ArrayList<>(valores.subList(m + 1, m + 1 + n2));
 
         int i = 0, j = 0;
         int k = l;
         while (i < n1 && j < n2) {
-            if (L[i].compareToIgnoreCase(R[j]) >= 0) {
-                valores[k] = L[i];
+            if (L.get(i).compareToIgnoreCase(R.get(j)) >= 0) {
+                valores.set(k, L.get(i));
                 i++;
             } else {
-                valores[k] = R[j];
+                valores.set(k, R.get(j));
                 j++;
             }
             k++;
         }
 
         while (i < n1) {
-            valores[k] = L[i];
+            valores.set(k, L.get(i));
             i++;
             k++;
         }
 
         while (j < n2) {
-            valores[k] = R[j];
+            valores.set(k, R.get(j));
             j++;
             k++;
         }

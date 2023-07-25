@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 class OrdenamientoMain {
     public static void main(String[] args) {
@@ -10,11 +9,14 @@ class OrdenamientoMain {
         int cantidadValores = scanner.nextInt();
 
         // Obtener los valores
-        String[] valores = new String[cantidadValores];
+        List<String> valores = new ArrayList<>();
         System.out.println("Ingrese los valores, uno por línea:");
         for (int i = 0; i < cantidadValores; i++) {
-            valores[i] = scanner.next();
+            valores.add(scanner.next());
         }
+
+        // Eliminar duplicados
+        eliminarDuplicados(valores);
 
         // Obtener el tipo de ordenamiento
         System.out.print("¿Desea ordenar de menor a mayor (1) o de mayor a menor (2)? ");
@@ -34,7 +36,7 @@ class OrdenamientoMain {
         int algoritmo = scanner.nextInt();
 
         // Crear el objeto de ordenamiento según el algoritmo seleccionado
-        Ordenamiento ordenamiento;
+        AlgoritmoOrdenamiento ordenamiento;
         switch (algoritmo) {
             case 1:
                 ordenamiento = new SelectionSort();
@@ -61,9 +63,7 @@ class OrdenamientoMain {
                 ordenamiento = new RadixSort();
                 break;
             default:
-                System.out.println("Algoritmo no válido. Se utilizará el Bubble sort por defecto.");
-                ordenamiento = new BubbleSort();
-                break;
+                throw new IllegalArgumentException("Algoritmo no válido.");
         }
 
         // Ordenar la lista de valores
@@ -74,6 +74,12 @@ class OrdenamientoMain {
         }
 
         // Mostrar la lista ordenada
-        System.out.println("Lista ordenada: " + Arrays.toString(valores));
+        System.out.println("Lista ordenada: " + valores);
+    }
+
+    private static void eliminarDuplicados(List<String> valores) {
+        Set<String> uniqueValues = new LinkedHashSet<>(valores);
+        valores.clear();
+        valores.addAll(uniqueValues);
     }
 }
